@@ -73,7 +73,7 @@ class DomainValidation
         string|null $exceptMessage = null
     ): void
     {
-        if (strlen($year) > 4) {
+        if (strlen($year) <> 4) {
             throw new EntityValidationException($exceptMessage ?? "Year cannot have more than 4 characters.");
         }
 

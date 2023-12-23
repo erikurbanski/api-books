@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domain\Entity;
 
-use DateTime;
 use Throwable;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +13,6 @@ class AuthorUnitTest extends TestCase
     /**
      * Test author attributes.
      * @return void
-     * @throws EntityValidationException
      */
     public function testAttributes()
     {

@@ -2,6 +2,7 @@
 
 namespace Core\Domain\Entity;
 
+use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use DateTime;
 use Exception;
 
@@ -10,6 +11,8 @@ use Core\Domain\Exception\EntityValidationException;
 
 class Book
 {
+    use MethodsMagicsTrait;
+
     /**
      * Constructor class.
      * @param string $title
