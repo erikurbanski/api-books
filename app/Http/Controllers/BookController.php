@@ -22,7 +22,6 @@ use Core\UseCase\DTO\Book\Input\RequestUpdateBookDTO;
 use Core\UseCase\DTO\Book\Input\RequestCreateBookDTO;
 use Core\Domain\Exception\EntityValidationException;
 
-
 class BookController extends Controller
 {
     /**

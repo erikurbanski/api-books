@@ -2,38 +2,27 @@
 
 namespace Tests\Feature\App\Http\Controller;
 
-use App\Http\Controllers\BookController;
-use App\Http\Requests\StoreBookRequest;
-use App\Http\Requests\UpdateBookRequest;
-use App\Models\Book;
-use App\Repositories\Eloquent\BookEloquentRepository;
-use Core\Domain\Repository\BookRepositoryInterface;
-use Core\UseCase\Author\DeleteAuthorUseCase;
-use Core\UseCase\Book\CreateBookUseCase;
-use Core\UseCase\Book\DeleteBookUseCase;
-use Core\UseCase\Book\GetBookUseCase;
-use Core\UseCase\Book\ListBooksUseCase;
-use Core\UseCase\Book\UpdateBookUseCase;
 use Tests\TestCase;
-
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ParameterBag;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-use Core\UseCase\Author\GetAuthorUseCase;
-use Core\UseCase\Author\ListAuthorsUseCase;
-use Core\UseCase\Author\CreateAuthorUseCase;
-use Core\UseCase\Author\UpdateAuthorUseCase;
-use Core\Domain\Exception\EntityValidationException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
-use App\Models\Author;
-use App\Http\Requests\StoreAuthorRequest;
-use App\Http\Requests\UpdateAuthorRequest;
-use App\Http\Controllers\AuthorController;
-use App\Repositories\Eloquent\AuthorEloquentRepository;
+use App\Models\Book;
+use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
+use App\Http\Controllers\BookController;
+use App\Repositories\Eloquent\BookEloquentRepository;
+
+use Core\UseCase\Book\GetBookUseCase;
+use Core\UseCase\Book\ListBooksUseCase;
+use Core\UseCase\Book\UpdateBookUseCase;
+use Core\UseCase\Book\CreateBookUseCase;
+use Core\UseCase\Book\DeleteBookUseCase;
+use Core\Domain\Exception\EntityValidationException;
 
 class BookControllerTest extends TestCase
 {
