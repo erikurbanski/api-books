@@ -8,9 +8,9 @@ interface BookRepositoryInterface
 {
     public function getById(int $id): Book;
 
-    public function insert(Book $author): Book;
+    public function insert(Book $book): Book;
 
-    public function update(Book $author): Book;
+    public function update(Book $book): Book;
 
     public function delete(int $id): bool;
 

@@ -121,7 +121,7 @@ class AuthorEloquentRepositoryUnitTest extends TestCase
     public function testUpdateAuthorNotFound()
     {
         try {
-            $author = new AuthorEntity(name: 'Erik Urbanski asdsadasd');
+            $author = new AuthorEntity(name: 'Erik Urbanski Santos');
             $this->repository->update($author);
             $this->assertTrue(true);
         } catch (Throwable $th) {

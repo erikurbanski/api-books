@@ -6,7 +6,8 @@
 - [X] Criar entidades restantes.
 - [X] Ajustar teste para cast de valores na model de Books.
 - [X] Adicionar validação para valores decimais, ano e valores inteiros.
-- [ ] Criar testes para assunto e livros.
+- [X] Criar testes para tudo relacionado a livros (Models, Repositories, UseCases).
+- [ ] Criar testes para tudo relacionado a assuntos (Models, Repositories, UseCases).
 - [ ] Implementar caso de uso relacionados ao CRUD de assuntos.
 - [ ] Implementar caso de uso relacionados ao CRUD de livros.
 - [ ] Implementar caso de uso para relacionar livros e autores.
