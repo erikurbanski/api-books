@@ -31,12 +31,22 @@ trait MethodsMagicsTrait
     }
 
     /**
-     * Convert created to string and formatted.
+     * Convert created date to string and formatted.
      * @param string $format
      * @return string
      */
     public function formatCreatedAt(string $format = 'Y-m-d'): string
     {
         return $this->createdAt->format($format);
+    }
+
+    /**
+     * Convert update date to string and formatted.
+     * @param string $format
+     * @return string
+     */
+    public function formatUpdateAt(string $format = 'Y-m-d'): string
+    {
+        return $this->updatedAt->format($format);
     }
 }
