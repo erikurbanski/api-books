@@ -113,4 +113,71 @@ class AuthorEloquentRepositoryUnitTest extends TestCase
         $this->assertInstanceOf(PaginationInterface::class, $response);
         $this->assertCount(0, $response->items());
     }
+
+    /**
+     * Test update to authors not found in database.
+     * @return void
+     */
+    public function testUpdateAuthorNotFound()
+    {
+        try {
+            $author = new AuthorEntity(name: 'Erik Urbanski asdsadasd');
+            $this->repository->update($author);
+            $this->assertTrue(true);
+        } catch (Throwable $th) {
+            $this->assertInstanceOf(NotFoundRegisterException::class, $th);
+        }
+    }
+
+    /**
+     * Test update to author in database.
+     * @return void
+     * @throws EntityValidationException
+     * @throws NotFoundRegisterException
+     */
+    public function testUpdate()
+    {
+        $authorInDB = AuthorModel::factory()->create();
+
+        $updatedAuthorName = 'Updated Name';
+        $author = new AuthorEntity(
+            name: $updatedAuthorName,
+            id: $authorInDB->id,
+            createdAt: $authorInDB->created_at,
+        );
+
+        $response = $this->repository->update($author);
+
+        $this->assertInstanceOf(AuthorEntity::class, $response);
+        $this->assertNotEquals($response->name, $authorInDB->name);
+        $this->assertEquals($updatedAuthorName, $response->name);
+    }
+
+    /**
+     * Test delete not found off author in database.
+     * @return void
+     */
+    public function testDeleteNotFound()
+    {
+        try {
+            $bool = $this->repository->delete(99);
+            $this->assertTrue($bool);
+        } catch (Throwable $th) {
+            $this->assertInstanceOf(NotFoundRegisterException::class, $th);
+        }
+    }
+
+    /**
+     * Test delete one author in database.
+     * @return void
+     * @throws NotFoundRegisterException
+     */
+    public function testDelete()
+    {
+        $authorInDB = AuthorModel::factory()->create();
+
+        $response = $this->repository->delete($authorInDB->id);
+
+        $this->assertTrue($response);
+    }
 }

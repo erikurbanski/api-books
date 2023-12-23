@@ -74,22 +74,40 @@ class AuthorEloquentRepository implements AuthorRepositoryInterface
      * Update one author in database.
      * @param AuthorEntity $author
      * @return AuthorEntity
+     * @throws NotFoundRegisterException
+     * @throws EntityValidationException
      */
     public function update(AuthorEntity $author): AuthorEntity
     {
-        return new AuthorEntity(
-            name: 'Teste de Retorno'
-        );
+        $authorDB = $this->authorModel->query()->find($author->id());
+        if (!$authorDB) {
+            throw new NotFoundRegisterException(message: 'Register not found!');
+        }
+
+        $authorDB->query()
+            ->update([
+                'name' => $author->name
+            ]);
+
+        $authorDB->refresh();
+
+        return $this->toAuthor($authorDB);
     }
 
     /**
      * Delete one author in database.
      * @param int $id
      * @return bool
+     * @throws NotFoundRegisterException
      */
     public function delete(int $id): bool
     {
-        return true;
+        $authorDB = $this->authorModel->query()->find($id);
+        if (!$authorDB) {
+            throw new NotFoundRegisterException(message: 'Register not found!');
+        }
+
+        return $authorDB->delete();
     }
 
     /**
@@ -117,7 +135,12 @@ class AuthorEloquentRepository implements AuthorRepositoryInterface
      * @param int $totalPerPage
      * @return PaginationInterface
      */
-    public function paginate(string $filter = '', string $order = 'DESC', int $page = 1, int $totalPerPage = 15): PaginationInterface
+    public function paginate(
+        string $filter = '',
+        string $order = 'DESC',
+        int    $page = 1,
+        int    $totalPerPage = 15,
+    ): PaginationInterface
     {
         $query = $this->authorModel->query();
 
