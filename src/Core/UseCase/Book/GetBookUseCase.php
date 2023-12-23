@@ -28,7 +28,7 @@ class GetBookUseCase
         $book = $this->repository->getById($inputs->id);
 
         return new ResponseGetBookDTO(
-            id: $book->id ?? null,
+            id: $book->id,
             title: $book->title,
             publisher: $book->publisher,
             edition: $book->edition,
