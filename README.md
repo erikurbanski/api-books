@@ -77,10 +77,11 @@ php artisan test --stop-on-failure
 Depois basta acessar o projeto em:
 [http://localhost:8888](http://localhost:8888)
 
-Comandos auxiliares:
+Comandos auxiliares e didáticos:
 
 ```sh
 php artisan make:model Author -m
 php artisan make:test App\\Models\CategoryUnitTest --unit
 php artisan make:factory AuthorFactory 
+php artisan test --filter GetAuthorUseCaseTest
 ```
