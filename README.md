@@ -84,4 +84,6 @@ php artisan make:model Author -m
 php artisan make:test App\\Models\CategoryUnitTest --unit
 php artisan make:factory AuthorFactory 
 php artisan test --filter GetAuthorUseCaseTest
+php artisan make:resource AuthorResource
+php artisan make:request AuthorResource
 ```

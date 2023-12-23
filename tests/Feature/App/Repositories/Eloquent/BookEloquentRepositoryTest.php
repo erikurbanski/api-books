@@ -13,7 +13,7 @@ use Core\Domain\Repository\BookRepositoryInterface;
 use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\Exception\NotFoundRegisterException;
 
-class BookEloquentRepositoryUnitTest extends TestCase
+class BookEloquentRepositoryTest extends TestCase
 {
     protected BookEloquentRepository $repository;
 

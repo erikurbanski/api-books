@@ -14,7 +14,7 @@ use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\Exception\NotFoundRegisterException;
 use Core\Domain\Repository\AuthorRepositoryInterface;
 
-class AuthorEloquentRepositoryUnitTest extends TestCase
+class AuthorEloquentRepositoryTest extends TestCase
 {
     protected AuthorEloquentRepository $repository;
 
