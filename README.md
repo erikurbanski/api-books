@@ -86,4 +86,5 @@ php artisan make:factory AuthorFactory
 php artisan test --filter GetAuthorUseCaseTest
 php artisan make:resource AuthorResource
 php artisan make:request AuthorResource
+php artisan route:list
 ```
