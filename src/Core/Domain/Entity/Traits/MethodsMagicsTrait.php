@@ -45,7 +45,7 @@ trait MethodsMagicsTrait
      * @param string $format
      * @return string
      */
-    public function formatUpdateAt(string $format = 'Y-m-d'): string
+    public function formatUpdatedAt(string $format = 'Y-m-d'): string
     {
         return $this->updatedAt->format($format);
     }

@@ -2,11 +2,10 @@
 
 namespace Core\Domain\Entity;
 
-use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use DateTime;
 use Exception;
-
 use Core\Domain\Validation\DomainValidation;
+use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use Core\Domain\Exception\EntityValidationException;
 
 class Book
@@ -24,6 +23,7 @@ class Book
      * @param DateTime|string $updatedAt
      * @param int|null $id
      * @throws Exception
+     * @throws EntityValidationException
      */
     public function __construct(
         protected string          $title = '',
