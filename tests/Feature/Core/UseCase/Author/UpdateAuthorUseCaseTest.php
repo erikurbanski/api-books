@@ -2,18 +2,14 @@
 
 namespace Tests\Feature\Core\UseCase\Author;
 
-use Core\Domain\Exception\EntityValidationException;
-use Core\UseCase\Author\GetAuthorUseCase;
-use Core\UseCase\Author\UpdateAuthorUseCase;
-use Core\UseCase\DTO\Author\Input\RequestUpdateAuthorDTO;
 use Tests\TestCase;
 
 use App\Models\Author;
 use App\Repositories\Eloquent\AuthorEloquentRepository;
 
-use Core\UseCase\Author\ListAuthorsUseCase;
-use Core\UseCase\DTO\Author\Input\RequestListAuthorsDTO;
-use Core\UseCase\DTO\Author\Output\ResponseListAuthorsDTO;
+use Core\UseCase\Author\UpdateAuthorUseCase;
+use Core\Domain\Exception\EntityValidationException;
+use Core\UseCase\DTO\Author\Input\RequestUpdateAuthorDTO;
 
 class UpdateAuthorUseCaseTest extends TestCase
 {
