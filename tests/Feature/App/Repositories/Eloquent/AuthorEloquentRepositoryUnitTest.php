@@ -35,7 +35,7 @@ class AuthorEloquentRepositoryUnitTest extends TestCase
      */
     public function testInsert()
     {
-        $entity = new AuthorEntity(name: 'Erik Urbanski Santos');
+        $entity = new AuthorEntity(name: 'Erik Urbanski');
 
         $response = $this->repository->insert($entity);
 
@@ -94,11 +94,23 @@ class AuthorEloquentRepositoryUnitTest extends TestCase
      */
     public function testPaginate()
     {
-        $authors = AuthorModel::factory()->count(45)->create();
+        AuthorModel::factory()->count(45)->create();
 
         $response = $this->repository->paginate();
 
         $this->assertInstanceOf(PaginationInterface::class, $response);
         $this->assertCount(15, $response->items());
+    }
+
+    /**
+     * Test paginate authors in database.
+     * @return void
+     */
+    public function testPaginateEmpty()
+    {
+        $response = $this->repository->paginate();
+
+        $this->assertInstanceOf(PaginationInterface::class, $response);
+        $this->assertCount(0, $response->items());
     }
 }

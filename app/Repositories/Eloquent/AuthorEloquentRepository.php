@@ -119,6 +119,15 @@ class AuthorEloquentRepository implements AuthorRepositoryInterface
      */
     public function paginate(string $filter = '', string $order = 'DESC', int $page = 1, int $totalPerPage = 15): PaginationInterface
     {
-        return new PaginatorPresenter();
+        $query = $this->authorModel->query();
+
+        if ($filter) {
+            $query->where('name', 'LIKE', "%$filter%");
+        }
+
+        $query->orderBy('name', $order);
+        $paginator = $query->paginate();
+
+        return new PaginatorPresenter($paginator);
     }
 }
