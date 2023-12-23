@@ -75,26 +75,38 @@ class BookUnitTest extends TestCase
         }
     }
 
-//    /**
-//     * Test update data book.
-//     * @return void
-//     * @throws EntityValidationException
-//     */
-//    public function testUpdate()
-//    {
-//        $book = new Book(
-//            description: 'Loves',
-//            createdAt: '2023-12-01',
-//            updatedAt: '2023-12-01',
-//            id: 299,
-//        );
-//
-//        $book->update(
-//            description: 'Loves'
-//        );
-//
-//        $this->assertEquals('Loves', $book->description);
-//    }
+    /**
+     * Test update data book.
+     * @return void
+     * @throws Exception
+     */
+    public function testUpdate()
+    {
+        $book = new Book(
+            title: 'Design Patterns',
+            publisher: 'Atlas',
+            edition: 2,
+            year: '2022', # Year have only 3 characters.
+            value: 54.89,
+            createdAt: '2023-12-01',
+            updatedAt: '2023-12-01',
+        );
+
+        $book->update(
+            title: 'Design Patterns - New Edition',
+            publisher: 'Atlas',
+            edition: 3,
+            year: '2023',
+            value: 68.90,
+        );
+
+        $this->assertEquals('Atlas', $book->publisher);
+
+        $this->assertNotEquals(2, $book->edition);
+        $this->assertNotEquals(54.89, $book->value);
+        $this->assertNotEquals('2022', $book->year);
+        $this->assertNotEquals('Design Patterns', $book->title);
+    }
 
     /**
      * Test validation rules to book title.
