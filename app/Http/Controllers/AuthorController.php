@@ -45,10 +45,10 @@ class AuthorController extends Controller
         )->additional([
             'meta' => [
                 'total' => $response->total,
+                'per_page' => $response->per_page,
                 'last_page' => $response->last_page,
                 'first_page' => $response->first_page,
-                'per_page' => $response->per_page,
-            ]
+            ],
         ]);
     }
 

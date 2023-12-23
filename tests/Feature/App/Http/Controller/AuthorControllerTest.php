@@ -69,7 +69,7 @@ class AuthorControllerTest extends TestCase
         $request->headers->set('content-type', 'application/json');
         $request->setJson(
             new ParameterBag([
-               'name' => 'Erik Urbanski Santos',
+                'name' => 'Erik Urbanski Santos',
             ]),
         );
 
