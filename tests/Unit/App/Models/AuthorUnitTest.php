@@ -27,4 +27,11 @@ class AuthorUnitTest extends ModelTestCase
     {
         return ['name'];
     }
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'int'
+        ];
+    }
 }

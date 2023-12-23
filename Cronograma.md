@@ -4,7 +4,7 @@
 - [X] Criar migrations restantes
 - [X] Criar models restantes
 - [ ] Criar entidades restantes.
-- [ ] Ajustar teste para cast de valores na model de Books.
+- [X] Ajustar teste para cast de valores na model de Books.
 - [ ] Implementar caso de uso relacionados ao CRUD de assuntos.
 - [ ] Implementar caso de uso relacionados ao CRUD de livros.
 - [ ] Implementar caso de uso para relacionar livros e autores.

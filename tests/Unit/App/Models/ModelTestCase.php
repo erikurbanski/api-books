@@ -13,6 +13,8 @@ abstract class ModelTestCase extends TestCase
 
     abstract protected function filled(): array;
 
+    abstract protected function casts(): array;
+
     /**
      * A basic unit test to test traits in models.
      * @return void
@@ -37,5 +39,18 @@ abstract class ModelTestCase extends TestCase
         $filled = $this->model()->getFillable();
 
         $this->assertEquals($expected, $filled);
+    }
+
+    /**
+     * Check casts attributes in models.
+     * @return void
+     */
+    public function testCasts(): void
+    {
+        $expectedCasts = $this->casts();
+
+        $casts = $this->model()->getCasts();
+
+        $this->assertEquals($expectedCasts, $casts);
     }
 }
