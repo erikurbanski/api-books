@@ -32,7 +32,7 @@ class UpdateAuthorUseCaseTest extends TestCase
         );
 
         $this->assertEquals('Updated Name', $responseUseCase->name);
-        $this->assertDatabaseHas('authors', [
+        $this->assertDatabaseHas('author', [
             'name' => $responseUseCase->name
         ]);
     }

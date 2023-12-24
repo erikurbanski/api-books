@@ -25,7 +25,7 @@ class DeleteAuthorUseCaseTest extends TestCase
             new RequestGetAuthorDTO(id: $authorDB->id)
         );
 
-        $this->assertDatabaseMissing('authors', [
+        $this->assertDatabaseMissing('author', [
             'name' => $authorDB->name,
         ]);
     }

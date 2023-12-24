@@ -31,6 +31,6 @@ class CreateAuthorUseCaseTest extends TestCase
         $this->assertEquals('Milene Diniz', $response->name);
         $this->assertNotEmpty($response->id);
 
-        $this->assertDatabaseHas('authors', ['id' => $response->id]);
+        $this->assertDatabaseHas('author', ['id' => $response->id]);
     }
 }

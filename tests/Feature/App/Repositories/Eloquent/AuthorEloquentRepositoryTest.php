@@ -42,7 +42,7 @@ class AuthorEloquentRepositoryTest extends TestCase
         $this->assertInstanceOf(AuthorRepositoryInterface::class, $this->repository);
         $this->assertInstanceOf(AuthorEntity::class, $response);
 
-        $this->assertDatabaseHas('authors', ['name' => $entity->name]);
+        $this->assertDatabaseHas('author', ['name' => $entity->name]);
     }
 
     /**

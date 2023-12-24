@@ -66,7 +66,7 @@ class BookEloquentRepository implements BookRepositoryInterface
      */
     public function insert(BookEntity $book): BookEntity
     {
-        $book = $this->bookModel->query()->create([
+        $savedBook = $this->bookModel->query()->create([
             'title' => $book->title,
             'publisher' => $book->publisher,
             'edition' => $book->edition,
@@ -74,7 +74,11 @@ class BookEloquentRepository implements BookRepositoryInterface
             'value' => $book->value,
         ]);
 
-        return $this->toBook($book);
+        if (count($book->authorsId) > 0) {
+            $savedBook->authors()->sync($book->authorsId);
+        }
+
+        return $this->toBook($savedBook);
     }
 
     /**

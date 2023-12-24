@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\App\Repositories\Eloquent;
 
+use App\Models\Author;
 use Throwable;
 use Tests\TestCase;
 
@@ -28,6 +29,51 @@ class BookEloquentRepositoryTest extends TestCase
     }
 
     /**
+     * Check interface implements.
+     * @return void
+     */
+    public function testImplementsInterface()
+    {
+        $this->assertInstanceOf(BookEloquentRepository::class, $this->repository);
+    }
+
+    /**
+     * Test insert with relations.
+     * @throws EntityValidationException
+     */
+    public function testInsertWithRelationship()
+    {
+        $authors = Author::factory()->count(4)->create();
+        $authorsId = $authors->pluck('id')->toArray();
+
+        $book = new BookEntity(
+            title: 'World Map 2023',
+            publisher: 'Atlas Update',
+            edition: 4,
+            year: '2021',
+            value: 190.9,
+            authorsId: $authorsId,
+        );
+
+        $response = $this->repository->insert($book);
+
+        $this->assertDatabaseHas('book', ['id' => $response->id()]);
+        $this->assertDatabaseCount('author_book', 4);
+    }
+
+    /**
+     * Test not found book.
+     * @return void
+     * @throws NotFoundRegisterException
+     * @throws EntityValidationException
+     */
+    public function testNotFoundBook()
+    {
+        $this->expectException(NotFoundRegisterException::class);
+        $this->repository->getById(22);
+    }
+
+    /**
      * A basic feature to test insert book in database.
      * @return void
      * @throws EntityValidationException
@@ -47,7 +93,10 @@ class BookEloquentRepositoryTest extends TestCase
         $this->assertInstanceOf(BookRepositoryInterface::class, $this->repository);
         $this->assertInstanceOf(BookEntity::class, $response);
 
-        $this->assertDatabaseHas('books', ['title' => $entity->title]);
+        $this->assertEquals($entity->year, $response->year);
+        $this->assertEquals($entity->title, $response->title);
+
+        $this->assertDatabaseHas('book', ['title' => $entity->title]);
     }
 
     /**
