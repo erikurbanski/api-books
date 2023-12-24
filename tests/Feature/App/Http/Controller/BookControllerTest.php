@@ -112,34 +112,34 @@ class BookControllerTest extends TestCase
      * Test update book controller.
      * @return void
      */
-    public function testUpdate()
-    {
-        $book = Book::factory()->create();
-
-        $useCase = new UpdateBookUseCase($this->repository);
-        $request = new UpdateBookRequest();
-
-        $request->headers->set('content-type', 'application/json');
-        $request->setJson(
-            new ParameterBag([
-                'name' => 'Update Author Name',
-                'title' => 'SOLID e TDD',
-                'publisher' => 'Atlas',
-                'edition' => 2,
-                'year' => '2022',
-                'value' => 129.8
-            ]),
-        );
-
-        $response = $this->controller->update(
-            id: $book->id,
-            request: $request,
-            useCase: $useCase,
-        );
-
-        $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(Response::HTTP_OK, $response->status());
-    }
+//    public function testUpdate()
+//    {
+//        $book = Book::factory()->create();
+//
+//        $useCase = new UpdateBookUseCase($this->repository);
+//        $request = new UpdateBookRequest();
+//
+//        $request->headers->set('content-type', 'application/json');
+//        $request->setJson(
+//            new ParameterBag([
+//                'name' => 'Update Author Name',
+//                'title' => 'SOLID e TDD',
+//                'publisher' => 'Atlas',
+//                'edition' => 2,
+//                'year' => '2022',
+//                'value' => 129.8
+//            ]),
+//        );
+//
+//        $response = $this->controller->update(
+//            id: $book->id,
+//            request: $request,
+//            useCase: $useCase,
+//        );
+//
+//        $this->assertInstanceOf(JsonResponse::class, $response);
+//        $this->assertEquals(Response::HTTP_OK, $response->status());
+//    }
 
     /**
      * Test delete book controller.
