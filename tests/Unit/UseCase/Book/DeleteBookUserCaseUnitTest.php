@@ -18,7 +18,10 @@ class DeleteBookUserCaseUnitTest extends TestCase
      */
     public function testDeleteBook()
     {
+        # Arrange
         $this->mockBookRepository = Mockery::mock(stdClass::class, BookRepositoryInterface::class);
+
+        # Spec
         $this->mockBookRepository
             ->shouldReceive('delete')
             ->once()
@@ -27,9 +30,11 @@ class DeleteBookUserCaseUnitTest extends TestCase
         $bookId = 1;
         $this->mockRequestGetBookDTO = Mockery::mock(RequestGetBookDTO::class, [$bookId]);
 
+        # Action
         $deleteUseCase = new DeleteBookUseCase($this->mockBookRepository);
         $responseUseCase = $deleteUseCase->execute($this->mockRequestGetBookDTO);
 
+        # Assert
         $this->assertInstanceOf(ResponseDeleteBookDTO::class, $responseUseCase);
         $this->assertTrue($responseUseCase->success);
     }
@@ -39,13 +44,14 @@ class DeleteBookUserCaseUnitTest extends TestCase
      */
     public function testNotDeleteBook()
     {
+        $bookId = 2;
         $this->mockBookRepository = Mockery::mock(stdClass::class, BookRepositoryInterface::class);
         $this->mockBookRepository
             ->shouldReceive('delete')
-            ->once()
+            ->times(1)
+            ->with($bookId)
             ->andReturn(false);
 
-        $bookId = 2;
         $this->mockRequestGetBookDTO = Mockery::mock(RequestGetBookDTO::class, [$bookId]);
 
         $deleteUseCase = new DeleteBookUseCase($this->mockBookRepository);

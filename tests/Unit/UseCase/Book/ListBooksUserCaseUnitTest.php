@@ -35,6 +35,25 @@ class ListBooksUserCaseUnitTest extends TestCase
 
         $this->assertCount(0, $responseUseCase->items);
         $this->assertInstanceOf(ResponseListBooksDTO::class, $responseUseCase);
+
+        /**
+         * Spies
+         * Arrange
+         */
+        $this->spyBookRepository = Mockery::spy(stdClass::class, BookRepositoryInterface::class);
+        $this->spyBookRepository
+            ->shouldReceive('paginate')
+            ->once()
+            ->andReturn($mockPagination);
+
+        # Action
+        $listSpyBooksUseCase = new ListBooksUseCase($this->spyBookRepository);
+        $listSpyBooksUseCase->execute($this->mockRequestListBooksDTO);
+
+        # Assert
+        $this->spyBookRepository
+            ->shouldReceive()
+            ->paginate('filter', 'ASC', 2, 20);
     }
 
     /**
