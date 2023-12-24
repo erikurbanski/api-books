@@ -153,4 +153,18 @@ class AuthorEloquentRepository implements AuthorRepositoryInterface
 
         return new PaginatorPresenter($paginator);
     }
+
+    /**
+     * Return a list off id's from list id's.
+     * @param array $authorsId
+     * @return array
+     */
+    public function getIdsFromListIds(array $authorsId = []): array
+    {
+        return $this->authorModel
+            ->query()
+            ->whereIn('id', $authorsId)
+            ->pluck('id')
+            ->toArray();
+    }
 }

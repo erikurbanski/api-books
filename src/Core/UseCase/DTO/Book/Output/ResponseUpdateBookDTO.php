@@ -14,6 +14,7 @@ class ResponseUpdateBookDTO
      * @param float $value
      * @param string $createdAt
      * @param string $updatedAt
+     * @param array  $authorsId
      */
     public function __construct(
         public int $id,
@@ -24,6 +25,7 @@ class ResponseUpdateBookDTO
         public float  $value,
         public string $createdAt = '',
         public string $updatedAt = '',
+        public array  $authorsId = [],
     )
     {
     }

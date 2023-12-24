@@ -11,6 +11,7 @@ class RequestCreateBookDTO
      * @param int $edition
      * @param string $year
      * @param float $value
+     * @param array $authorsId
      */
     public function __construct(
         public string $title,
@@ -18,6 +19,7 @@ class RequestCreateBookDTO
         public int    $edition,
         public string $year,
         public float  $value,
+        public array  $authorsId = [],
     )
     {
     }

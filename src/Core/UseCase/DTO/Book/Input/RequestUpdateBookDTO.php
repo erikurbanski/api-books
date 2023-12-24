@@ -14,6 +14,7 @@ class RequestUpdateBookDTO
         public int    $edition,
         public string $year,
         public float  $value,
+        public array  $authorsId,
     )
     {
     }

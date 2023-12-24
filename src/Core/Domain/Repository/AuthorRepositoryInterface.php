@@ -12,6 +12,8 @@ interface AuthorRepositoryInterface
 
     public function update(Author $author): Author;
 
+    public function getIdsFromListIds(array $authorsId = []): array;
+
     public function delete(int $id): bool;
 
     public function findAll(string $filter = '', string $order = 'DESC'): array;
