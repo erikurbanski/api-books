@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\App\Http\Controller;
 
-use Core\UseCase\Interfaces\TransactionInterface;
+use Throwable;
 use Tests\TestCase;
 
 use Illuminate\Http\Request;
@@ -17,6 +17,7 @@ use App\Models\Author;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Controllers\BookController;
+use App\Repositories\Transaction\DatabaseTransaction;
 use App\Repositories\Eloquent\BookEloquentRepository;
 use App\Repositories\Eloquent\AuthorEloquentRepository;
 
@@ -62,34 +63,37 @@ class BookControllerTest extends TestCase
     /**
      * Test store controller.
      * @return void
+     * @throws Throwable
      * @throws EntityValidationException
      */
-//    public function testStore()
-//    {
-//        $authorRepository = new AuthorEloquentRepository(new Author());
-//
-//        $useCase = new CreateBookUseCase(
-//            $this->repository,
-//            $authorRepository,
-//        );
-//
-//        $request = new StoreBookRequest();
-//        $request->headers->set('content-type', 'application/json');
-//        $request->setJson(
-//            new ParameterBag([
-//                'title' => 'SOLID Principle',
-//                'publisher' => 'Pandas',
-//                'edition' => 1,
-//                'year' => '2023',
-//                'value' => 100
-//            ]),
-//        );
-//
-//        $response = $this->controller->store($request, $useCase);
-//
-//        $this->assertInstanceOf(JsonResponse::class, $response);
-//        $this->assertEquals(Response::HTTP_CREATED, $response->status());
-//    }
+    public function testStore()
+    {
+        $authorRepository = new AuthorEloquentRepository(new Author());
+        $databaseTransaction = new DatabaseTransaction();
+
+        $useCase = new CreateBookUseCase(
+            $this->repository,
+            $authorRepository,
+            $databaseTransaction,
+        );
+
+        $request = new StoreBookRequest();
+        $request->headers->set('content-type', 'application/json');
+        $request->setJson(
+            new ParameterBag([
+                'title' => 'SOLID Principle',
+                'publisher' => 'Pandas',
+                'edition' => 1,
+                'year' => '2023',
+                'value' => 100
+            ]),
+        );
+
+        $response = $this->controller->store($request, $useCase);
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_CREATED, $response->status());
+    }
 
     /**
      * Test show book controller.
@@ -111,35 +115,43 @@ class BookControllerTest extends TestCase
     /**
      * Test update book controller.
      * @return void
+     * @throws Throwable
      */
-//    public function testUpdate()
-//    {
-//        $book = Book::factory()->create();
-//
-//        $useCase = new UpdateBookUseCase($this->repository);
-//        $request = new UpdateBookRequest();
-//
-//        $request->headers->set('content-type', 'application/json');
-//        $request->setJson(
-//            new ParameterBag([
-//                'name' => 'Update Author Name',
-//                'title' => 'SOLID e TDD',
-//                'publisher' => 'Atlas',
-//                'edition' => 2,
-//                'year' => '2022',
-//                'value' => 129.8
-//            ]),
-//        );
-//
-//        $response = $this->controller->update(
-//            id: $book->id,
-//            request: $request,
-//            useCase: $useCase,
-//        );
-//
-//        $this->assertInstanceOf(JsonResponse::class, $response);
-//        $this->assertEquals(Response::HTTP_OK, $response->status());
-//    }
+    public function testUpdate()
+    {
+        $book = Book::factory()->create();
+
+        $authorRepository = new AuthorEloquentRepository(new Author());
+        $databaseTransaction = new DatabaseTransaction();
+
+        $useCase = new UpdateBookUseCase(
+            $this->repository,
+            $authorRepository,
+            $databaseTransaction,
+        );
+
+        $request = new UpdateBookRequest();
+        $request->headers->set('content-type', 'application/json');
+        $request->setJson(
+            new ParameterBag([
+                'name' => 'Update Author Name',
+                'title' => 'SOLID e TDD',
+                'publisher' => 'Atlas',
+                'edition' => 2,
+                'year' => '2022',
+                'value' => 129.8
+            ]),
+        );
+
+        $response = $this->controller->update(
+            id: $book->id,
+            request: $request,
+            useCase: $useCase,
+        );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_OK, $response->status());
+    }
 
     /**
      * Test delete book controller.

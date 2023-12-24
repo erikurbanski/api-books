@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +55,7 @@ class BookController extends Controller
      * @param CreateBookUseCase $useCase
      * @return JsonResponse
      * @throws EntityValidationException
+     * @throws Throwable
      */
     public function store(StoreBookRequest $request, CreateBookUseCase $useCase): JsonResponse
     {
@@ -64,6 +66,7 @@ class BookController extends Controller
                 edition: $request->edition,
                 year: $request->year,
                 value: $request->value,
+                authorsId: $request->authorsId ?? [],
             ),
         );
 
@@ -97,6 +100,7 @@ class BookController extends Controller
      * @param UpdateBookRequest $request
      * @param UpdateBookUseCase $useCase
      * @return JsonResponse
+     * @throws Throwable
      */
     public function update(int $id, UpdateBookRequest $request, UpdateBookUseCase $useCase): JsonResponse
     {
@@ -108,6 +112,7 @@ class BookController extends Controller
                 edition: $request->edition,
                 year: $request->year,
                 value: $request->value,
+                authorsId: $request->authorsId ?? [],
             ),
         );
 
