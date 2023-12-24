@@ -12,13 +12,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 40);
-            $table->string('publisher', 40);
-            $table->string('year', 4);
-            $table->integer('edition');
-            $table->decimal('value', 20, 8);
+        Schema::create('subject_book', function (Blueprint $table) {
+            $table->foreignId('book_id')
+                ->constrained('book')
+                ->restrictOnDelete();
+
+            $table->foreignId('subject_id')
+                ->constrained('subject')
+                ->restrictOnDelete();
+
+            $table->unique(['book_id', 'subject_id']);
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('author_book');
     }
 };

@@ -10,6 +10,8 @@ class Subject extends Model
 {
     use HasFactory;
 
+    protected $table = 'subject';
+
     protected $fillable = ['description'];
 
     public function books(): BelongsToMany
