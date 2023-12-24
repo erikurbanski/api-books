@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\App\Repositories\Eloquent;
 
-use App\Models\Author;
 use Throwable;
 use Tests\TestCase;
 
+use App\Models\Author;
 use App\Models\Book as BookModel;
 use App\Repositories\Eloquent\BookEloquentRepository;
 
@@ -35,6 +35,38 @@ class BookEloquentRepositoryTest extends TestCase
     public function testImplementsInterface()
     {
         $this->assertInstanceOf(BookEloquentRepository::class, $this->repository);
+    }
+
+    /**
+     * Test update to book in database.
+     * @return void
+     * @throws EntityValidationException
+     * @throws NotFoundRegisterException
+     */
+    public function testUpdate()
+    {
+        $bookInDB = BookModel::factory()->create();
+        $authors = Author::factory()->count(4)->create();
+
+        $updatedBookTitle = 'Updated Title Book';
+        $book = new BookEntity(
+            title: $updatedBookTitle,
+            publisher: 'Atlas Update',
+            edition: 4,
+            year: '2021',
+            value: 190.9,
+            id: $bookInDB->id,
+        );
+
+        foreach ($authors as $author) {
+            $book->addAuthor($author->id);
+        }
+
+        $response = $this->repository->update($book);
+
+        $this->assertInstanceOf(BookEntity::class, $response);
+        $this->assertNotEquals($response->title, $bookInDB->title);
+        $this->assertEquals($updatedBookTitle, $response->title);
     }
 
     /**
@@ -161,33 +193,6 @@ class BookEloquentRepositoryTest extends TestCase
         } catch (Throwable $th) {
             $this->assertInstanceOf(NotFoundRegisterException::class, $th);
         }
-    }
-
-    /**
-     * Test update to book in database.
-     * @return void
-     * @throws EntityValidationException
-     * @throws NotFoundRegisterException
-     */
-    public function testUpdate()
-    {
-        $bookInDB = BookModel::factory()->create();
-
-        $updatedBookTitle = 'Updated Title Book';
-        $book = new BookEntity(
-            title: $updatedBookTitle,
-            publisher: 'Atlas Update',
-            edition: 4,
-            year: '2021',
-            value: 190.9,
-            id: $bookInDB->id
-        );
-
-        $response = $this->repository->update($book);
-
-        $this->assertInstanceOf(BookEntity::class, $response);
-        $this->assertNotEquals($response->title, $bookInDB->title);
-        $this->assertEquals($updatedBookTitle, $response->title);
     }
 
     /**

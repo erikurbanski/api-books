@@ -104,6 +104,10 @@ class BookEloquentRepository implements BookRepositoryInterface
                 'value' => $book->value,
             ]);
 
+        if (count($book->authorsId) > 0) {
+            $bookDB->authors()->sync($book->authorsId);
+        }
+
         $bookDB->refresh();
 
         return $this->toBook($bookDB);
