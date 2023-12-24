@@ -3,10 +3,12 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Book as BookModel;
+use App\Repositories\Presenters\PaginatorPresenter;
 use Core\Domain\Entity\Book as BookEntity;
 use Core\Domain\Repository\BookRepositoryInterface;
 use Core\Domain\Exception\NotFoundRegisterException;
 use Core\Domain\Exception\EntityValidationException;
+use Core\Domain\Repository\PaginationInterface;
 
 class BookEloquentRepository implements BookRepositoryInterface
 {
@@ -136,4 +138,30 @@ class BookEloquentRepository implements BookRepositoryInterface
         return $books->toArray();
     }
 
+    /**
+     * Paginate books.
+     * @param string $filter
+     * @param string $order
+     * @param int $page
+     * @param int $totalPerPage
+     * @return PaginationInterface
+     */
+    public function paginate(
+        string $filter = '',
+        string $order = 'DESC',
+        int $page = 1,
+        int $totalPerPage = 15
+    ): PaginationInterface
+    {
+        $query = $this->bookModel->query();
+
+        if ($filter) {
+            $query->where('title', 'LIKE', "%$filter%");
+        }
+
+        $query->orderBy('title', $order);
+        $paginator = $query->paginate();
+
+        return new PaginatorPresenter($paginator);
+    }
 }

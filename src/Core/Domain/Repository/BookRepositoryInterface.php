@@ -15,4 +15,6 @@ interface BookRepositoryInterface
     public function delete(int $id): bool;
 
     public function findAll(string $filter = '', string $order = 'DESC'): array;
+
+    public function paginate(string $filter = '', string $order = 'DESC', int $page = 1, int $totalPerPage = 15): PaginationInterface;
 }

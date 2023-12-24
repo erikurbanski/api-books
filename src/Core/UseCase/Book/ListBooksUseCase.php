@@ -25,14 +25,21 @@ class ListBooksUseCase
      */
     public function execute(RequestListBooksDTO $inputs): ResponseListBooksDTO
     {
-        $books = $this->repository->findAll(
+        $books = $this->repository->paginate(
             filter: $inputs->filter,
             order: $inputs->order,
+            page: $inputs->page,
+            totalPerPage: $inputs->totalPerPage,
         );
 
         return new ResponseListBooksDTO(
-            items: $books,
-            total: count($books),
+            items: $books->items(),
+            total: $books->total(),
+            last_page: $books->lastPage(),
+            first_page: $books->firstPage(),
+            per_page: $books->perPage(),
+            to: $books->to(),
+            from: $books->from(),
         );
     }
 }

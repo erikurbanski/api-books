@@ -167,4 +167,51 @@ class BookUnitTest extends TestCase
             $this->assertInstanceOf(EntityValidationException::class, $th);
         }
     }
+
+    /**
+     * Set one author in a book.
+     * @return void
+     * @throws EntityValidationException
+     */
+    public function testAddAuthorToBook()
+    {
+        $authorId = 1;
+        $book = new Book(
+            title: 'JavaScript Guide',
+            publisher: 'Erik Urbanski',
+            edition: 1,
+            year: '2023',
+            value: 158.10,
+            authorsId: [
+                $authorId,
+                $authorId,
+            ],
+        );
+
+        $this->assertCount(2, $book->authorsId);
+        $book->addAuthor($authorId);
+        $this->assertCount(3, $book->authorsId);
+    }
+
+    /**
+     * Delete authors in a book.
+     * @return void
+     * @throws EntityValidationException
+     */
+    public function testDelAuthorToBook()
+    {
+        $authorId = 10;
+        $book = new Book(
+            title: 'JavaScript Guide',
+            publisher: 'Erik Urbanski',
+            edition: 1,
+            year: '2023',
+            value: 158.10,
+            authorsId: [$authorId],
+        );
+
+        $this->assertCount(1, $book->authorsId);
+        $book->removeAuthor($authorId);
+        $this->assertCount(0, $book->authorsId);
+    }
 }

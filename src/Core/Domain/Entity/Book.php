@@ -4,6 +4,7 @@ namespace Core\Domain\Entity;
 
 use DateTime;
 use Exception;
+
 use Core\Domain\Validation\DomainValidation;
 use Core\Domain\Entity\Traits\MethodsMagicsTrait;
 use Core\Domain\Exception\EntityValidationException;
@@ -22,6 +23,7 @@ class Book
      * @param DateTime|string $createdAt
      * @param DateTime|string $updatedAt
      * @param int|null $id
+     * @param array $authorsId
      * @throws Exception
      * @throws EntityValidationException
      */
@@ -34,6 +36,7 @@ class Book
         protected DateTime|string $createdAt = '',
         protected DateTime|string $updatedAt = '',
         protected int|null        $id = null,
+        protected array           $authorsId = [],
     )
     {
         $this->createdAt = new DateTime($this->createdAt ?? 'now');
@@ -57,6 +60,27 @@ class Book
         $this->edition = $edition;
         $this->year = $year;
         $this->value = $value;
+    }
+
+    /**
+     * Set one author in a book.
+     * @param int $authorId
+     * @return void
+     */
+    public function addAuthor(int $authorId): void
+    {
+        $this->authorsId[] = $authorId;
+    }
+
+    /**
+     * Remove one author in a book.
+     * @param int $authorId
+     * @return void
+     */
+    public function removeAuthor(int $authorId): void
+    {
+        $key = array_search($authorId, $this->authorsId);
+        unset($this->authorsId[$key]);
     }
 
     /**
