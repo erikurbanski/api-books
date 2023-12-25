@@ -15,6 +15,7 @@ class ResponseCreateBookDTO
      * @param string $createdAt
      * @param string $updatedAt
      * @param array $authorsId
+     * @param array $subjectsId
      */
     public function __construct(
         public ?int   $id,
@@ -26,6 +27,7 @@ class ResponseCreateBookDTO
         public string $createdAt = '',
         public string $updatedAt = '',
         public array  $authorsId = [],
+        public array  $subjectsId = [],
     )
     {
     }
