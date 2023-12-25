@@ -67,7 +67,7 @@ class SubjectController extends Controller
             ),
         );
 
-        $resource = new SubjectResource(collect($response));
+        $resource = new SubjectResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_CREATED);
@@ -85,7 +85,7 @@ class SubjectController extends Controller
             new RequestGetSubjectDTO($id),
         );
 
-        $resource = new SubjectResource(collect($author));
+        $resource = new SubjectResource($author);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);
@@ -108,7 +108,7 @@ class SubjectController extends Controller
             ),
         );
 
-        $resource = new SubjectResource(collect($response));
+        $resource = new SubjectResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);

@@ -37,6 +37,8 @@ class BookController extends Controller
             inputs: new RequestListBooksDTO(
                 filter: $request->get('filter', ''),
                 order: $request->get('order', 'DESC'),
+                page: (int) $request->get('page', 1),
+                totalPerPage: (int) $request->get('total_page', 15),
             ),
         );
 
@@ -45,6 +47,12 @@ class BookController extends Controller
         )->additional([
             'meta' => [
                 'total' => $response->total,
+                'per_page' => $response->per_page,
+                'last_page' => $response->last_page,
+                'first_page' => $response->first_page,
+                'current_page' => $response->current_page,
+                'to' => $response->to,
+                'from' => $response->from,
             ],
         ]);
     }
@@ -71,7 +79,7 @@ class BookController extends Controller
             ),
         );
 
-        $resource = new BookResource(collect($response));
+        $resource = new BookResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_CREATED);
@@ -89,7 +97,7 @@ class BookController extends Controller
             new RequestGetBookDTO($id),
         );
 
-        $resource = new BookResource(collect($response));
+        $resource = new BookResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);
@@ -118,7 +126,7 @@ class BookController extends Controller
             ),
         );
 
-        $resource = new BookResource(collect($response));
+        $resource = new BookResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);

@@ -48,6 +48,9 @@ class AuthorController extends Controller
                 'per_page' => $response->per_page,
                 'last_page' => $response->last_page,
                 'first_page' => $response->first_page,
+                'current_page' => $response->current_page,
+                'to' => $response->to,
+                'from' => $response->from,
             ],
         ]);
     }
@@ -67,7 +70,7 @@ class AuthorController extends Controller
             ),
         );
 
-        $resource = new AuthorResource(collect($response));
+        $resource = new AuthorResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_CREATED);
@@ -85,7 +88,7 @@ class AuthorController extends Controller
             new RequestGetAuthorDTO($id),
         );
 
-        $resource = new AuthorResource(collect($author));
+        $resource = new AuthorResource($author);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);
@@ -108,7 +111,7 @@ class AuthorController extends Controller
             ),
         );
 
-        $resource = new AuthorResource(collect($response));
+        $resource = new AuthorResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);
