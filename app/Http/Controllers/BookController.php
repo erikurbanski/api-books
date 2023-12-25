@@ -97,7 +97,7 @@ class BookController extends Controller
             new RequestGetBookDTO($id),
         );
 
-        $resource = new BookResource($response);
+        $resource = new BookPaginatorResource($response);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);

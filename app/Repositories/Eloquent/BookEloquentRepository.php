@@ -30,6 +30,9 @@ class BookEloquentRepository implements BookRepositoryInterface
      */
     private function toBook(object $object): BookEntity
     {
+        $authorsId = $object->authors ? $object->authors->pluck('id')->toArray() : [];
+        $subjectsId = $object->subjects ? $object->subjects->pluck('id')->toArray() : [];
+
         return new BookEntity(
             title: $object->title,
             publisher: $object->publisher,
@@ -37,6 +40,8 @@ class BookEloquentRepository implements BookRepositoryInterface
             year: $object->year,
             value: $object->value,
             id: $object->id,
+            authorsId: $authorsId,
+            subjectsId: $subjectsId,
         );
     }
 

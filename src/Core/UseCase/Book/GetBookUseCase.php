@@ -36,6 +36,8 @@ class GetBookUseCase
             value: $book->value,
             createdAt: $book->formatCreatedAt(),
             updatedAt: $book->formatUpdatedAt(),
+            authors: $book->authorsId,
+            subjects: $book->subjectsId,
         );
     }
 }
