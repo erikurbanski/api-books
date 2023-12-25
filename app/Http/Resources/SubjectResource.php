@@ -8,6 +8,9 @@ class SubjectResource extends JsonResource
 {
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'description' => $this->description,
+        ];
     }
 }
