@@ -38,6 +38,7 @@ class ListBooksUseCase
             last_page: $books->lastPage(),
             first_page: $books->firstPage(),
             per_page: $books->perPage(),
+            current_page: $books->currentPage(),
             to: $books->to(),
             from: $books->from(),
         );

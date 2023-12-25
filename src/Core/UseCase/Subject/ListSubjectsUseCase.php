@@ -38,6 +38,7 @@ class ListSubjectsUseCase
             last_page: $subjects->lastPage(),
             first_page: $subjects->firstPage(),
             per_page: $subjects->perPage(),
+            current_page: $subjects->currentPage(),
             to: $subjects->to(),
             from: $subjects->from(),
         );

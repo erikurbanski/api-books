@@ -38,6 +38,7 @@ class ListAuthorsUseCase
             last_page: $authors->lastPage(),
             first_page: $authors->firstPage(),
             per_page: $authors->perPage(),
+            current_page: $authors->currentPage(),
             to: $authors->to(),
             from: $authors->from(),
         );
