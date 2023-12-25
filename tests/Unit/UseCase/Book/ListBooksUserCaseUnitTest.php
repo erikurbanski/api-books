@@ -117,6 +117,7 @@ class ListBooksUserCaseUnitTest extends TestCase
         $mockPagination->shouldReceive('perPage')->andReturn(0);
         $mockPagination->shouldReceive('lastPage')->andReturn(0);
         $mockPagination->shouldReceive('firstPage')->andReturn(0);
+        $mockPagination->shouldReceive('currentPage')->andReturn(0);
 
         return $mockPagination;
     }

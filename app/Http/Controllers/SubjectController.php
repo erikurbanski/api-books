@@ -48,6 +48,9 @@ class SubjectController extends Controller
                 'per_page' => $response->per_page,
                 'last_page' => $response->last_page,
                 'first_page' => $response->first_page,
+                'current_page' => $response->current_page,
+                'to' => $response->to,
+                'from' => $response->from,
             ],
         ]);
     }

@@ -21,7 +21,7 @@ class AuthorControllersUnitTest extends TestCase
             ->andReturn('test');
 
         $mockAuthorResponseDTO = Mockery::mock(ResponseListAuthorsDTO::class, [
-            [], 1, 1, 1, 1, 1, 1
+            [], 1, 1, 1, 1, 1, 1, 1
         ]);
 
         $mockUseCase = Mockery::mock(ListAuthorsUseCase::class);
