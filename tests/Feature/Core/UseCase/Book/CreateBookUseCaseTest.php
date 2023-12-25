@@ -7,9 +7,11 @@ use Tests\TestCase;
 
 use App\Models\Book;
 use App\Models\Author;
+use App\Models\Subject;
 use App\Repositories\Eloquent\BookEloquentRepository;
 use App\Repositories\Transaction\DatabaseTransaction;
 use App\Repositories\Eloquent\AuthorEloquentRepository;
+use App\Repositories\Eloquent\SubjectEloquentRepository;
 
 use Core\UseCase\Book\CreateBookUseCase;
 use Core\UseCase\DTO\Book\Input\RequestCreateBookDTO;
@@ -27,16 +29,21 @@ class CreateBookUseCaseTest extends TestCase
     {
         $bookRepository = new BookEloquentRepository(new Book());
         $authorRepository = new AuthorEloquentRepository(new Author());
+        $subjectRepository = new SubjectEloquentRepository(new Subject());
 
         $databaseTransaction = new DatabaseTransaction();
         $useCase = new CreateBookUseCase(
             bookRepository: $bookRepository,
             authorRepository: $authorRepository,
+            subjectRepository: $subjectRepository,
             transaction: $databaseTransaction,
         );
 
         $authors = Author::factory()->count(5)->create();
         $authorsId = $authors->pluck('id')->toArray();
+
+        $subjects = Subject::factory()->count(8)->create();
+        $subjectsId = $subjects->pluck('id')->toArray();
 
         $response = $useCase->execute(
             inputs: new RequestCreateBookDTO(
@@ -46,6 +53,7 @@ class CreateBookUseCaseTest extends TestCase
                 year: '2021',
                 value: 190.9,
                 authorsId: $authorsId,
+                subjectsId: $subjectsId,
             ),
         );
 
@@ -53,7 +61,8 @@ class CreateBookUseCaseTest extends TestCase
         $this->assertNotEmpty($response->id);
 
         $this->assertDatabaseHas('book', ['id' => $response->id]);
-        $this->assertDatabaseCount('author_book', 5);
+        $this->assertDatabaseCount('book_author', 5);
+        $this->assertDatabaseCount('book_subject', 8);
     }
 
     /**
@@ -67,11 +76,13 @@ class CreateBookUseCaseTest extends TestCase
 
         $bookRepository = new BookEloquentRepository(new Book());
         $authorRepository = new AuthorEloquentRepository(new Author());
+        $subjectRepository = new SubjectEloquentRepository(new Subject());
 
         $databaseTransaction = new DatabaseTransaction();
         $useCase = new CreateBookUseCase(
             bookRepository: $bookRepository,
             authorRepository: $authorRepository,
+            subjectRepository: $subjectRepository,
             transaction: $databaseTransaction,
         );
 
@@ -92,6 +103,43 @@ class CreateBookUseCaseTest extends TestCase
     }
 
     /**
+     * Test create book with not exists subjects.
+     * @throws EntityValidationException
+     * @throws Throwable
+     */
+    public function testCreateBookWithSubjectsDoesNoExistUseCase()
+    {
+        $this->expectException(NotFoundRegisterException::class);
+
+        $bookRepository = new BookEloquentRepository(new Book());
+        $authorRepository = new AuthorEloquentRepository(new Author());
+        $subjectRepository = new SubjectEloquentRepository(new Subject());
+
+        $databaseTransaction = new DatabaseTransaction();
+        $useCase = new CreateBookUseCase(
+            bookRepository: $bookRepository,
+            authorRepository: $authorRepository,
+            subjectRepository: $subjectRepository,
+            transaction: $databaseTransaction,
+        );
+
+        $subjects = Subject::factory()->count(8)->create();
+        $subjectsId = $subjects->pluck('id')->toArray();
+        $subjectsId[] = 9;
+
+        $useCase->execute(
+            inputs: new RequestCreateBookDTO(
+                title: 'SOLID e TDD',
+                publisher: 'Atlas Update',
+                edition: 4,
+                year: '2021',
+                value: 190.9,
+                subjectsId: $subjectsId,
+            ),
+        );
+    }
+
+    /**
      * Test transaction.
      * @return void
      */
@@ -99,11 +147,13 @@ class CreateBookUseCaseTest extends TestCase
     {
         $bookRepository = new BookEloquentRepository(new Book());
         $authorRepository = new AuthorEloquentRepository(new Author());
+        $subjectRepository = new SubjectEloquentRepository(new Subject());
 
         $databaseTransaction = new DatabaseTransaction();
         $useCase = new CreateBookUseCase(
             bookRepository: $bookRepository,
             authorRepository: $authorRepository,
+            subjectRepository: $subjectRepository,
             transaction: $databaseTransaction,
         );
 
@@ -122,14 +172,14 @@ class CreateBookUseCaseTest extends TestCase
                 ),
             );
 
-            $this->assertDatabaseCount('author_book', 5);
+            $this->assertDatabaseCount('book_author', 5);
             $this->assertDatabaseHas('book', [
                 'title' => 'SOLID e TDD',
             ]);
 
         } catch (Throwable $th) {
             $this->assertDatabaseCount('book', 0);
-            $this->assertDatabaseCount('author_book', 0);
+            $this->assertDatabaseCount('book_author', 0);
         }
     }
 }

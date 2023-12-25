@@ -11,12 +11,13 @@ use Core\Domain\Entity\Book;
 use Core\Domain\Repository\BookRepositoryInterface;
 use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\Exception\NotFoundRegisterException;
+use Core\Domain\Repository\SubjectRepositoryInterface;
+use Core\Domain\Repository\AuthorRepositoryInterface;
 
 use Core\UseCase\Book\CreateBookUseCase;
 use Core\UseCase\Interfaces\TransactionInterface;
 use Core\UseCase\DTO\Book\Input\RequestCreateBookDTO;
 use Core\UseCase\DTO\Book\Output\ResponseCreateBookDTO;
-use Core\Domain\Repository\AuthorRepositoryInterface;
 
 class CreateBookUserCaseUnitTest extends TestCase
 {
@@ -31,10 +32,11 @@ class CreateBookUserCaseUnitTest extends TestCase
         $bookUseCase = new CreateBookUseCase(
             bookRepository: $this->getMockRepository($id),
             authorRepository: $this->getMockAuthorRepository($id),
+            subjectRepository: $this->getMockSubjectRepository($id, 1),
             transaction: $this->getMockTransaction(),
         );
 
-        $response = $bookUseCase->execute($this->getMockRequestCreateBookDTO([$id]));
+        $response = $bookUseCase->execute($this->getMockRequestCreateBookDTO([$id], [$id]));
 
         $this->assertInstanceOf(ResponseCreateBookDTO::class, $response);
     }
@@ -44,7 +46,7 @@ class CreateBookUserCaseUnitTest extends TestCase
      * @throws Throwable
      * @throws EntityValidationException
      */
-    public function testCreateBookIfNotFoundAuthors()
+    public function testCreateBookIfNotFoundAuthorsAndSubjects()
     {
         $this->expectException(NotFoundRegisterException::class);
 
@@ -53,10 +55,11 @@ class CreateBookUserCaseUnitTest extends TestCase
         $bookUseCase = new CreateBookUseCase(
             bookRepository: $mockBookRepository,
             authorRepository: $this->getMockAuthorRepository($id),
+            subjectRepository: $this->getMockSubjectRepository($id),
             transaction: $this->getMockTransaction(),
         );
 
-        $bookUseCase->execute($this->getMockRequestCreateBookDTO([$id, 'fake_value']));
+        $bookUseCase->execute($this->getMockRequestCreateBookDTO([$id, 'fake_author'], []));
     }
 
     /**
@@ -96,10 +99,10 @@ class CreateBookUserCaseUnitTest extends TestCase
     /**
      * Get mock request create DTO.
      */
-    protected function getMockRequestCreateBookDTO(array $authorsId)
+    protected function getMockRequestCreateBookDTO(array $authorsId, array $subjectsId)
     {
         return Mockery::mock(RequestCreateBookDTO::class, [
-            'Design Patterns', 'Atlas', 2, '2023', 58.98, $authorsId
+            'Design Patterns', 'Atlas', 2, '2023', 58.98, $authorsId, $subjectsId
         ]);
     }
 
@@ -115,6 +118,20 @@ class CreateBookUserCaseUnitTest extends TestCase
             ->andReturn([$id]);
 
         return $mockAuthorRepository;
+    }
+
+    /**
+     * Get mock repository subject entity.
+     */
+    protected function getMockSubjectRepository(int $id, int $timeCalled = 0)
+    {
+        $mockSubjectRepository = Mockery::mock(stdClass::class, SubjectRepositoryInterface::class);
+        $mockSubjectRepository
+            ->shouldReceive('getIdsFromListIds')
+            ->times($timeCalled)
+            ->andReturn([$id]);
+
+        return $mockSubjectRepository;
     }
 
     /**

@@ -16,6 +16,7 @@ use Core\UseCase\DTO\Book\Input\RequestUpdateBookDTO;
 use Core\UseCase\DTO\Book\Output\ResponseUpdateBookDTO;
 use Core\Domain\Exception\NotFoundRegisterException;
 use Core\Domain\Repository\AuthorRepositoryInterface;
+use Core\Domain\Repository\SubjectRepositoryInterface;
 
 class UpdateBookUserCaseUnitTest extends TestCase
 {
@@ -29,10 +30,11 @@ class UpdateBookUserCaseUnitTest extends TestCase
         $bookUseCase = new UpdateBookUseCase(
             bookRepository: $this->getMockRepository($id),
             authorRepository: $this->getMockAuthorRepository($id),
+            subjectRepository: $this->getMockSubjectRepository($id, 1),
             transaction: $this->getMockTransaction(),
         );
 
-        $response = $bookUseCase->execute($this->getMockRequestUpdateBookDTO([$id]));
+        $response = $bookUseCase->execute($this->getMockRequestUpdateBookDTO([$id], [$id]));
 
         $this->assertInstanceOf(ResponseUpdateBookDTO::class, $response);
     }
@@ -50,10 +52,11 @@ class UpdateBookUserCaseUnitTest extends TestCase
         $bookUseCase = new UpdateBookUseCase(
             bookRepository: $mockBookRepository,
             authorRepository: $this->getMockAuthorRepository($id),
+            subjectRepository: $this->getMockSubjectRepository($id),
             transaction: $this->getMockTransaction(),
         );
 
-        $bookUseCase->execute($this->getMockRequestUpdateBookDTO([$id, 2]));
+        $bookUseCase->execute($this->getMockRequestUpdateBookDTO([$id, 2], [$id, 3]));
     }
 
     /**
@@ -67,6 +70,7 @@ class UpdateBookUserCaseUnitTest extends TestCase
 
         $mockBookEntity->shouldReceive('update');
         $mockBookEntity->shouldReceive('addAuthor');
+        $mockBookEntity->shouldReceive('addSubject');
         $mockBookEntity
             ->shouldReceive('formatCreatedAt')
             ->andReturn();
@@ -102,10 +106,10 @@ class UpdateBookUserCaseUnitTest extends TestCase
     /**
      * Get mock request create DTO.
      */
-    protected function getMockRequestUpdateBookDTO(array $authorsId)
+    protected function getMockRequestUpdateBookDTO(array $authorsId, array $subjectsId)
     {
         return Mockery::mock(RequestUpdateBookDTO::class, [
-            1, 'Design Patterns', 'Atlas', 2, '2023', 58.98, $authorsId
+            1, 'Design Patterns', 'Atlas', 2, '2023', 58.98, $authorsId, $subjectsId
         ]);
     }
 
@@ -121,6 +125,20 @@ class UpdateBookUserCaseUnitTest extends TestCase
             ->andReturn([$id]);
 
         return $mockAuthorRepository;
+    }
+
+    /**
+     * Get mock repository subject entity.
+     */
+    protected function getMockSubjectRepository(int $id, int $timeCalled = 0)
+    {
+        $mockSubjectRepository = Mockery::mock(stdClass::class, SubjectRepositoryInterface::class);
+        $mockSubjectRepository
+            ->shouldReceive('getIdsFromListIds')
+            ->times($timeCalled)
+            ->andReturn([$id]);
+
+        return $mockSubjectRepository;
     }
 
     /**
