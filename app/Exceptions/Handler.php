@@ -46,26 +46,25 @@ class Handler extends ExceptionHandler
      * @param $request
      * @param Throwable $e
      * @return JsonResponse|null
+     * @throws Throwable
      */
     public function render($request, Throwable $e): ?JsonResponse
     {
-        $render = null;
-
         if ($e instanceof NotFoundRegisterException) {
-            $render = $this->showError(
+            return $this->showError(
                 message: $e->getMessage(),
                 statusCode: Response::HTTP_NOT_FOUND,
             );
         }
 
         if ($e instanceof EntityValidationException) {
-            $render = $this->showError(
+            return $this->showError(
                 message: $e->getMessage(),
                 statusCode: Response::HTTP_INTERNAL_SERVER_ERROR,
             );
         }
 
-        return $render;
+        return parent::render($request, $e);
     }
 
     /**
