@@ -7,8 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 use App\Http\Resources\SubjectResource;
-use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateSubjectRequest;
+use App\Http\Requests\StoreSubjectRequest;
 
 use Core\UseCase\Subject\GetSubjectUseCase;
 use Core\UseCase\Subject\ListSubjectsUseCase;
@@ -57,12 +57,12 @@ class SubjectController extends Controller
 
     /**
      * Store one subject.
-     * @param StoreAuthorRequest $request
+     * @param StoreSubjectRequest $request
      * @param CreateSubjectUseCase $useCase
      * @throws EntityValidationException
      * @return JsonResponse
      */
-    public function store(StoreAuthorRequest $request, CreateSubjectUseCase $useCase): JsonResponse
+    public function store(StoreSubjectRequest $request, CreateSubjectUseCase $useCase): JsonResponse
     {
         $response = $useCase->execute(
             inputs: new RequestCreateSubjectDTO(
@@ -84,11 +84,11 @@ class SubjectController extends Controller
      */
     public function show(int $id, GetSubjectUseCase $useCase): JsonResponse
     {
-        $author = $useCase->execute(
+        $subject = $useCase->execute(
             new RequestGetSubjectDTO($id),
         );
 
-        $resource = new SubjectResource($author);
+        $resource = new SubjectResource($subject);
         return $resource
             ->response()
             ->setStatusCode(code: Response::HTTP_OK);

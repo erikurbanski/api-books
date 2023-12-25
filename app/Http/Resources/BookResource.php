@@ -14,6 +14,7 @@ class BookResource extends JsonResource
             'edition' => $this->edition,
             'year' => $this->year,
             'value' => $this->value,
+            'publisher' => $this->publisher,
         ];
     }
 }

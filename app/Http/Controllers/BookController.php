@@ -42,7 +42,7 @@ class BookController extends Controller
             ),
         );
 
-        return AuthorResource::collection(
+        return BookResource::collection(
             collect($response->items)
         )->additional([
             'meta' => [
@@ -74,8 +74,8 @@ class BookController extends Controller
                 edition: $request->edition,
                 year: $request->year,
                 value: $request->value,
-                authorsId: $request->authorsId ?? [],
-                subjectsId: $request->subjectsId ?? [],
+                authorsId: $request->authors ?? [],
+                subjectsId: $request->subjects ?? [],
             ),
         );
 
@@ -121,8 +121,8 @@ class BookController extends Controller
                 edition: $request->edition,
                 year: $request->year,
                 value: $request->value,
-                authorsId: $request->authorsId ?? [],
-                subjectsId: $request->subjectsId ?? [],
+                authorsId: $request->authors ?? [],
+                subjectsId: $request->subjects ?? [],
             ),
         );
 

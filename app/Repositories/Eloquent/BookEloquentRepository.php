@@ -99,14 +99,13 @@ class BookEloquentRepository implements BookRepositoryInterface
             throw new NotFoundRegisterException(message: 'Register not found!');
         }
 
-        $bookDB->query()
-            ->update([
-                'title' => $book->title,
-                'publisher' => $book->publisher,
-                'edition' => $book->edition,
-                'year' => $book->year,
-                'value' => $book->value,
-            ]);
+        $bookDB->year = $book->year;
+        $bookDB->title = $book->title;
+        $bookDB->value = $book->value;
+        $bookDB->edition = $book->edition;
+        $bookDB->publisher = $book->publisher;
+
+        $bookDB->update();
 
         if (count($book->authorsId) > 0) {
             $bookDB->authors()->sync($book->authorsId);

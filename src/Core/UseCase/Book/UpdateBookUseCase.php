@@ -63,6 +63,7 @@ class UpdateBookUseCase
             $this->validateSubjects($inputs->subjectsId);
 
             $updatedBook = $this->bookRepository->update($book);
+            $this->transaction->commit();
 
             return new ResponseUpdateBookDTO(
                 id: $updatedBook->id,
