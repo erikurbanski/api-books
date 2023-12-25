@@ -49,7 +49,13 @@ class BookEloquentRepository implements BookRepositoryInterface
      */
     public function getById(int $id): BookEntity
     {
-        $book = $this->bookModel->query()->find($id);
+        $book = $this->bookModel
+            ->query()
+            ->with([
+                'authors',
+                'subjects',
+            ])
+            ->find($id);
 
         if (!$book) {
             throw new NotFoundRegisterException(message: 'Register not found!');
@@ -168,7 +174,12 @@ class BookEloquentRepository implements BookRepositoryInterface
         int $totalPerPage = 15
     ): PaginationInterface
     {
-        $query = $this->bookModel->query();
+        $query = $this->bookModel
+            ->query()
+            ->with([
+                'authors',
+                'subjects',
+            ]);
 
         if ($filter) {
             $query->where('title', 'LIKE', "%$filter%");

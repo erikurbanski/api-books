@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\Http\Resources\BookResource;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
-use App\Http\Resources\AuthorResource;
-use App\Http\Resources\BookResource;
+use App\Http\Resources\BookPaginatorResource;
 
 use Core\UseCase\Book\GetBookUseCase;
 use Core\UseCase\Book\CreateBookUseCase;
@@ -42,7 +42,7 @@ class BookController extends Controller
             ),
         );
 
-        return BookResource::collection(
+        return BookPaginatorResource::collection(
             collect($response->items)
         )->additional([
             'meta' => [

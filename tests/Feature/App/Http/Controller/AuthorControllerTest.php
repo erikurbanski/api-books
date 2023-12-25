@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\App\Http\Controller;
 
-use Core\UseCase\Author\DeleteAuthorUseCase;
 use Tests\TestCase;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +15,7 @@ use Core\UseCase\Author\GetAuthorUseCase;
 use Core\UseCase\Author\ListAuthorsUseCase;
 use Core\UseCase\Author\CreateAuthorUseCase;
 use Core\UseCase\Author\UpdateAuthorUseCase;
+use Core\UseCase\Author\DeleteAuthorUseCase;
 use Core\Domain\Exception\EntityValidationException;
 
 use App\Models\Author;

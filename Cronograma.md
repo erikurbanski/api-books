@@ -7,11 +7,12 @@
 - [X] Ajustar teste para cast de valores na model de Books.
 - [X] Adicionar validação para valores decimais, ano e valores inteiros.
 - [X] Criar testes para tudo relacionado a livros (Models, Repositories, UseCases).
-- [ ] Criar testes para tudo relacionado a assuntos (Models, Repositories, UseCases).
-- [ ] Implementar caso de uso relacionados ao CRUD de assuntos.
+- [X] Criar testes para tudo relacionado a assuntos (Models, Repositories, UseCases).
+- [X] Implementar caso de uso relacionados ao CRUD de assuntos.
 - [X] Implementar caso de uso relacionados ao CRUD de livros.
 - [X] Implementar caso de uso para relacionar livros e autores.
-- [ ] Implementar caso de uso para relacionar livros e assuntos.
-- [ ] Implementar controllers e seus respectivos testes.
+- [X] Implementar caso de uso para relacionar livros e assuntos.
+- [X] Implementar controllers e seus respectivos testes.
 - [ ] Implementar front-end da aplicação integrando com a API.
+- [X] Melhoria no retorno da API relativa a entidade de Livros.
 - [ ] Relatório com VIEW no banco de dados.
