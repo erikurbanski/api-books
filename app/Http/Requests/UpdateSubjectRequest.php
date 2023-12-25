@@ -21,6 +21,12 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+        return [
+            'description' => [
+                'required',
+                'min:3',
+                'max:20',
+            ],
+        ];
     }
 }

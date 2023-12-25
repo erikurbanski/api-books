@@ -21,6 +21,40 @@ class UpdateBookRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [];
+        return [
+            'title' => [
+                'required',
+                'min:3',
+                'max:40',
+            ],
+            'publisher' => [
+                'required',
+                'min:3',
+                'max:40',
+            ],
+            'edition' => [
+                'integer',
+                'required',
+            ],
+            'year' => [
+                'required',
+                'min:4',
+                'max:4',
+            ],
+            'value' => [
+                'numeric',
+                'required',
+            ],
+            'authors' => [
+                'required',
+                'array',
+                'exists:author,id'
+            ],
+            'subjects' => [
+                'required',
+                'array',
+                'exists:subject,id'
+            ],
+        ];
     }
 }
