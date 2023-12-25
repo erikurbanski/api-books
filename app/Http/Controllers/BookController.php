@@ -67,6 +67,7 @@ class BookController extends Controller
                 year: $request->year,
                 value: $request->value,
                 authorsId: $request->authorsId ?? [],
+                subjectsId: $request->subjectsId ?? [],
             ),
         );
 
@@ -113,6 +114,7 @@ class BookController extends Controller
                 year: $request->year,
                 value: $request->value,
                 authorsId: $request->authorsId ?? [],
+                subjectsId: $request->subjectsId ?? [],
             ),
         );
 

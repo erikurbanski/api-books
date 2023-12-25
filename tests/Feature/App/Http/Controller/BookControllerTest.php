@@ -14,12 +14,14 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 use App\Models\Book;
 use App\Models\Author;
+use App\Models\Subject;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Http\Controllers\BookController;
 use App\Repositories\Transaction\DatabaseTransaction;
 use App\Repositories\Eloquent\BookEloquentRepository;
 use App\Repositories\Eloquent\AuthorEloquentRepository;
+use App\Repositories\Eloquent\SubjectEloquentRepository;
 
 use Core\UseCase\Book\GetBookUseCase;
 use Core\UseCase\Book\ListBooksUseCase;
@@ -69,11 +71,13 @@ class BookControllerTest extends TestCase
     public function testStore()
     {
         $authorRepository = new AuthorEloquentRepository(new Author());
-        $databaseTransaction = new DatabaseTransaction();
+        $subjectRepository = new SubjectEloquentRepository(new Subject());
 
+        $databaseTransaction = new DatabaseTransaction();
         $useCase = new CreateBookUseCase(
             $this->repository,
             $authorRepository,
+            $subjectRepository,
             $databaseTransaction,
         );
 
@@ -122,11 +126,13 @@ class BookControllerTest extends TestCase
         $book = Book::factory()->create();
 
         $authorRepository = new AuthorEloquentRepository(new Author());
-        $databaseTransaction = new DatabaseTransaction();
+        $subjectRepository = new SubjectEloquentRepository(new Subject());
 
+        $databaseTransaction = new DatabaseTransaction();
         $useCase = new UpdateBookUseCase(
             $this->repository,
             $authorRepository,
+            $subjectRepository,
             $databaseTransaction,
         );
 
