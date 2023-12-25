@@ -6,6 +6,7 @@ use Throwable;
 use Tests\TestCase;
 
 use App\Models\Author;
+use App\Models\Subject;
 use App\Models\Book as BookModel;
 use App\Repositories\Eloquent\BookEloquentRepository;
 
@@ -78,6 +79,9 @@ class BookEloquentRepositoryTest extends TestCase
         $authors = Author::factory()->count(4)->create();
         $authorsId = $authors->pluck('id')->toArray();
 
+        $subjects = Subject::factory()->count(6)->create();
+        $subjectsId = $subjects->pluck('id')->toArray();
+
         $book = new BookEntity(
             title: 'World Map 2023',
             publisher: 'Atlas Update',
@@ -85,12 +89,14 @@ class BookEloquentRepositoryTest extends TestCase
             year: '2021',
             value: 190.9,
             authorsId: $authorsId,
+            subjectsId: $subjectsId,
         );
 
         $response = $this->repository->insert($book);
 
         $this->assertDatabaseHas('book', ['id' => $response->id()]);
-        $this->assertDatabaseCount('author_book', 4);
+        $this->assertDatabaseCount('book_author', 4);
+        $this->assertDatabaseCount('book_subject', 6);
     }
 
     /**

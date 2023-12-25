@@ -3,12 +3,12 @@
 namespace App\Repositories\Eloquent;
 
 use App\Models\Book as BookModel;
-use App\Repositories\Presenters\PaginatorPresenter;
 use Core\Domain\Entity\Book as BookEntity;
+use Core\Domain\Repository\PaginationInterface;
 use Core\Domain\Repository\BookRepositoryInterface;
 use Core\Domain\Exception\NotFoundRegisterException;
 use Core\Domain\Exception\EntityValidationException;
-use Core\Domain\Repository\PaginationInterface;
+use App\Repositories\Presenters\PaginatorPresenter;
 
 class BookEloquentRepository implements BookRepositoryInterface
 {
@@ -78,6 +78,10 @@ class BookEloquentRepository implements BookRepositoryInterface
             $savedBook->authors()->sync($book->authorsId);
         }
 
+        if (count($book->subjectsId) > 0) {
+            $savedBook->subjects()->sync($book->subjectsId);
+        }
+
         return $this->toBook($savedBook);
     }
 
@@ -106,6 +110,10 @@ class BookEloquentRepository implements BookRepositoryInterface
 
         if (count($book->authorsId) > 0) {
             $bookDB->authors()->sync($book->authorsId);
+        }
+
+        if (count($book->subjectsId) > 0) {
+            $bookDB->subjects()->sync($book->subjectsId);
         }
 
         $bookDB->refresh();
