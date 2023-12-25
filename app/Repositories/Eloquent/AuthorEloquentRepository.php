@@ -84,11 +84,9 @@ class AuthorEloquentRepository implements AuthorRepositoryInterface
             throw new NotFoundRegisterException(message: 'Register not found!');
         }
 
-        $authorDB->query()
-            ->update([
-                'name' => $author->name
-            ]);
+        $authorDB->name = $author->name;
 
+        $authorDB->update();
         $authorDB->refresh();
 
         return $this->toAuthor($authorDB);

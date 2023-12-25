@@ -32,9 +32,9 @@ class SubjectEloquentRepository implements SubjectRepositoryInterface
     private function toSubject(object $object): SubjectEntity
     {
         return new SubjectEntity(
-            description: $object->name,
-            createdAt: $object->createdAt,
-            updatedAt: $object->updatedAt,
+            description: $object->description,
+            createdAt: $object->created_at,
+            updatedAt: $object->updated_at,
             id: $object->id
         );
     }
@@ -86,11 +86,9 @@ class SubjectEloquentRepository implements SubjectRepositoryInterface
             throw new NotFoundRegisterException(message: 'Register not found!');
         }
 
-        $subjectDB->query()
-            ->update([
-                'description' => $subject->description
-            ]);
+        $subjectDB->description = $subject->description;
 
+        $subjectDB->update();
         $subjectDB->refresh();
 
         return $this->toSubject($subjectDB);
