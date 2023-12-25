@@ -22,4 +22,6 @@ interface PaginationInterface
     public function lastPage(): int;
 
     public function firstPage(): int;
+
+    public function currentPage(): int;
 }

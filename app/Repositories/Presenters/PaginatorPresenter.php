@@ -89,4 +89,9 @@ class PaginatorPresenter implements PaginationInterface
     {
         return $this->paginator->firstItem() ?? 0;
     }
+
+    public function currentPage(): int
+    {
+        return $this->paginator->currentPage() ?? 0;
+    }
 }
