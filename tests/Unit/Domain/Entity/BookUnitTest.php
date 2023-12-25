@@ -194,6 +194,41 @@ class BookUnitTest extends TestCase
     }
 
     /**
+     * Set one subject in a book.
+     * @return void
+     * @throws EntityValidationException
+     */
+    public function testAddSubjectToBook()
+    {
+        $authorId = 1;
+        $subjectId = 2;
+
+        $book = new Book(
+            title: 'JavaScript Guide',
+            publisher: 'Erik Urbanski',
+            edition: 1,
+            year: '2023',
+            value: 158.10,
+            authorsId: [
+                $authorId,
+                $authorId,
+            ],
+            subjectsId: [
+                $subjectId,
+                $subjectId,
+                $subjectId,
+            ],
+        );
+
+        $this->assertCount(2, $book->authorsId);
+        $this->assertCount(3, $book->subjectsId);
+        $book->addAuthor($authorId);
+        $book->addSubject($subjectId);
+        $this->assertCount(3, $book->authorsId);
+        $this->assertCount(4, $book->subjectsId);
+    }
+
+    /**
      * Delete authors in a book.
      * @return void
      * @throws EntityValidationException
@@ -213,5 +248,28 @@ class BookUnitTest extends TestCase
         $this->assertCount(1, $book->authorsId);
         $book->removeAuthor($authorId);
         $this->assertCount(0, $book->authorsId);
+    }
+
+    /**
+     * Delete authors in a book.
+     * @return void
+     * @throws EntityValidationException
+     */
+    public function testDelSubjectToBook()
+    {
+        $subjectId = 10;
+        $book = new Book(
+            title: 'JavaScript Guide',
+            publisher: 'Erik Urbanski',
+            edition: 1,
+            year: '2023',
+            value: 158.10,
+            authorsId: [],
+            subjectsId: [$subjectId],
+        );
+
+        $this->assertCount(1, $book->subjectsId);
+        $book->removeSubject($subjectId);
+        $this->assertCount(0, $book->subjectsId);
     }
 }

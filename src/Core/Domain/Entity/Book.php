@@ -24,6 +24,7 @@ class Book
      * @param DateTime|string $updatedAt
      * @param int|null $id
      * @param array $authorsId
+     * @param array $subjectsId
      * @throws Exception
      * @throws EntityValidationException
      */
@@ -37,6 +38,7 @@ class Book
         protected DateTime|string $updatedAt = '',
         protected int|null        $id = null,
         protected array           $authorsId = [],
+        protected array           $subjectsId = [],
     )
     {
         $this->createdAt = new DateTime($this->createdAt ?? 'now');
@@ -73,6 +75,16 @@ class Book
     }
 
     /**
+     * Set one subject in a book.
+     * @param int $subjectId
+     * @return void
+     */
+    public function addSubject(int $subjectId): void
+    {
+        $this->subjectsId[] = $subjectId;
+    }
+
+    /**
      * Remove one author in a book.
      * @param int $authorId
      * @return void
@@ -81,6 +93,17 @@ class Book
     {
         $key = array_search($authorId, $this->authorsId);
         unset($this->authorsId[$key]);
+    }
+
+    /**
+     * Remove one subject in a book.
+     * @param int $subjectId
+     * @return void
+     */
+    public function removeSubject(int $subjectId): void
+    {
+        $key = array_search($subjectId, $this->subjectsId);
+        unset($this->subjectsId[$key]);
     }
 
     /**
