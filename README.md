@@ -79,6 +79,9 @@ Depois basta acessar o projeto em:
 [http://localhost:8000](http://localhost:8888)
 <br>
 
+O arquivo Routes_Book_API contido na raiz pode ser importado no Insomnia ou Postman.
+O mesmo possibilita testar todas as rotas descritas nesta API.
+
 [Erik Urbanski Santos](http://github.com/erikurbanski)
 <br>
 Última edição em: 26/12/2023
