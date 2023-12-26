@@ -35,61 +35,65 @@
                 </th>
             </tr>
         </table>
-        <table>
-            <thead>
-                <tr>
-                    <th>Autores:</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($catalog as $author => $books)
+        @if (count($catalog) === 0)
+            <p>Nenhum registro encontrado!</p>
+        @else
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            <span>{{ $author }}</span>
-                        </td>
-                    <tr>
-                    <tr>
-                        <td>
-                            <table class="book-detail">
-                                <thead>
-                                    <tr>
-                                        <th>Livro</th>
-                                        <th>Assunto</th>
-                                        <th>Editora</th>
-                                        <th>Edição</th>
-                                        <th>Valor</th>
-                                        <th>Ano</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($books as $key => $item)
+                        <th>Autores:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($catalog as $author => $books)
+                        <tr>
+                            <td>
+                                <span>{{ $author }}</span>
+                            </td>
+                        <tr>
+                        <tr>
+                            <td>
+                                <table class="book-detail">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $item['title'] }}</td>
-                                            <td>{{ $item['description'] }}</td>
-                                            <td>{{ $item['publisher'] }}</td>
-                                            <td>{{ $item['edition'] }}</td>
-                                            <td>R$ {{ number_format($item['value'], 2) }}</td>
-                                            <td>{{ $item['year'] }}</td>
+                                            <th>Livro</th>
+                                            <th>Assunto</th>
+                                            <th>Editora</th>
+                                            <th>Edição</th>
+                                            <th>Valor</th>
+                                            <th>Ano</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($books as $key => $item)
+                                            <tr>
+                                                <td>{{ $item['title'] }}</td>
+                                                <td>{{ $item['description'] }}</td>
+                                                <td>{{ $item['publisher'] }}</td>
+                                                <td>{{ $item['edition'] }}</td>
+                                                <td>R$ {{ number_format($item['value'], 2) }}</td>
+                                                <td>{{ $item['year'] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td style="text-align:right">
+                            <span>{{ count($catalog) }} autores cadastrados.</span>
                         </td>
                     </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td style="text-align:right">
-                        <span>{{ count($catalog) }} autores cadastrados.</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:right">
-                        <span>Data do relatório {{ $date }}.</span>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                    <tr>
+                        <td style="text-align:right">
+                            <span>Data do relatório {{ $date }}.</span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        @endif
     </body>
 </html>
