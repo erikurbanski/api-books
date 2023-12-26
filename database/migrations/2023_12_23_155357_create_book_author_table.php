@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create('book_author', function (Blueprint $table) {
             $table->foreignId('book_id')
                 ->constrained('book')
-                ->restrictOnDelete();
+                ->onDelete('CASCADE');
 
             $table->foreignId('author_id')
                 ->constrained('author')
-                ->restrictOnDelete();
+                ->onDelete('CASCADE');
 
             $table->unique(['book_id', 'author_id']);
             $table->timestamps();
