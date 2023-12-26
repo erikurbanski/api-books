@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\SubjectController;
 
@@ -19,6 +20,8 @@ use App\Http\Controllers\SubjectController;
 Route::apiResource(name: '/books', controller: BookController::class);
 Route::apiResource(name: '/authors', controller: AuthorController::class);
 Route::apiResource(name: '/subjects', controller: SubjectController::class);
+
+Route::get('/catalog', [ReportController::class, 'index']);
 
 Route::get('/', function() {
     return response()->json(['message' => 'API working!']);
