@@ -13,6 +13,6 @@
 - [X] Implementar caso de uso para relacionar livros e autores.
 - [X] Implementar caso de uso para relacionar livros e assuntos.
 - [X] Implementar controllers e seus respectivos testes.
-- [ ] Implementar front-end da aplicação integrando com a API.
+- [X] Implementar front-end da aplicação integrando com a API.
 - [X] Melhoria no retorno da API relativa a entidade de Livros.
-- [ ] Relatório com VIEW no banco de dados.
+- [X] Relatório com VIEW no banco de dados.
