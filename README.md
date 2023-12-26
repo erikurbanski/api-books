@@ -75,4 +75,10 @@ php artisan test --stop-on-failure
 ```
 
 Depois basta acessar o projeto em:
+<br>
 [http://localhost:8000](http://localhost:8888)
+<br>
+
+[Erik Urbanski Santos](http://github.com/erikurbanski)
+<br>
+Última edição em: 26/12/2023
